@@ -123,6 +123,14 @@
     .meta-strip .gh{transition:transform .14s ease;}
     .meta-strip .gh:hover{transform:translate(-1px,-1px);}
   }
+  /* Stack the meta strip vertically on narrow screens (where the content
+     column has shrunk below its full 18-cell width), horizontal otherwise. */
+  @media (max-width:520px){
+    .meta-strip{flex-direction:column;}
+    .meta-strip div{flex:0 0 auto;border-right:none;border-bottom:1.4px solid rgba(20,34,59,.18);}
+    .meta-strip div:last-child{border-bottom:none;}
+    .meta-strip .meta-cta{justify-content:flex-start;padding:8px 11px;}
+  }
 
   /* ---------- cards ---------- */
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}

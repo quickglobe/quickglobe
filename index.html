@@ -123,14 +123,13 @@
     .meta-strip .gh{transition:transform .14s ease;}
     .meta-strip .gh:hover{transform:translate(-1px,-1px);}
   }
-  /* Stack the meta strip vertically on narrow screens (where the content
-     column has shrunk below its full 18-cell width), horizontal otherwise. */
-  @media (max-width:520px){
-    .meta-strip{flex-direction:column;}
-    .meta-strip div{flex:0 0 auto;border-right:none;border-bottom:1.4px solid rgba(20,34,59,.18);}
-    .meta-strip div:last-child{border-bottom:none;}
-    .meta-strip .meta-cta{justify-content:flex-start;padding:8px 11px;}
-  }
+  /* Stack the meta strip vertically when the content column has shrunk below
+     its full 18-cell width. Toggled in JS via .is-narrow on #root so it tracks
+     the actual column width, not an assumed device-pixel breakpoint. */
+  #root.is-narrow .meta-strip{flex-direction:column;}
+  #root.is-narrow .meta-strip div{flex:0 0 auto;border-right:none;border-bottom:1.4px solid rgba(20,34,59,.18);}
+  #root.is-narrow .meta-strip div:last-child{border-bottom:none;}
+  #root.is-narrow .meta-strip .meta-cta{justify-content:flex-start;padding:8px 11px;}
 
   /* ---------- cards ---------- */
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
@@ -205,6 +204,8 @@
         root.style.width = width + 'px';
         root.style.marginLeft = margin + 'px';
         root.style.marginRight = 'auto';
+        // Stack the meta strip once the column is below its full 18-cell width.
+        root.classList.toggle('is-narrow', width < 18 * cell - 0.5);
       }
     }
     window.fitGrid = fit;

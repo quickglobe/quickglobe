@@ -108,11 +108,12 @@
     border-radius:4px;overflow:hidden;background:var(--cream);
     font-family:var(--mono);
   }
-  .meta-strip div{flex:1;padding:8px 11px;border-right:1.4px solid rgba(20,34,59,.18);}
-  .meta-strip div:last-child{border-right:none;}
+  .meta-info{display:flex;flex:2;min-width:0;border-right:1.4px solid rgba(20,34,59,.18);}
+  .meta-cell{flex:1;min-width:0;padding:8px 11px;border-right:1.4px solid rgba(20,34,59,.18);}
+  .meta-info .meta-cell:last-child{border-right:none;}
   .meta-strip .k{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#8b96ab;}
   .meta-strip .v{font-size:14px;font-weight:700;margin-top:2px;}
-  .meta-strip .meta-cta{flex:0 0 auto;display:flex;align-items:center;justify-content:center;padding:7px;}
+  .meta-cta{flex:1;display:flex;align-items:center;justify-content:center;padding:7px;}
   .meta-strip .gh{
     font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
     border:1.6px solid var(--ink);border-radius:4px;padding:7px 13px;background:var(--cream);
@@ -123,13 +124,15 @@
     .meta-strip .gh{transition:transform .14s ease;}
     .meta-strip .gh:hover{transform:translate(-1px,-1px);}
   }
-  /* Stack the meta strip vertically when the content column has shrunk below
-     its full 18-cell width. Toggled in JS via .is-narrow on #root so it tracks
-     the actual column width, not an assumed device-pixel breakpoint. */
-  #root.is-narrow .meta-strip{flex-direction:column;}
-  #root.is-narrow .meta-strip div{flex:0 0 auto;border-right:none;border-bottom:1.4px solid rgba(20,34,59,.18);}
-  #root.is-narrow .meta-strip div:last-child{border-bottom:none;}
-  #root.is-narrow .meta-strip .meta-cta{justify-content:flex-start;padding:8px 11px;}
+  /* When the content column has shrunk below its full 18-cell width (toggled in
+     JS via .is-narrow on #root, so it tracks the actual column width rather than
+     an assumed device-pixel breakpoint), split the strip into two sections:
+     Repositories/Updated stack vertically on the left, the button alone on the
+     right. */
+  #root.is-narrow .meta-info{flex-direction:column;flex:1;}
+  #root.is-narrow .meta-cell{border-right:none;}
+  #root.is-narrow .meta-info .meta-cell:first-child{border-bottom:1.4px solid rgba(20,34,59,.18);}
+  #root.is-narrow .meta-cta{flex:0 0 auto;}
 
   /* ---------- cards ---------- */
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
@@ -232,8 +235,10 @@
     </header>
 
     <div class="meta-strip" data-snap>
-      <div><div class="k">Repositories</div><div class="v" id="m-repos">—</div></div>
-      <div><div class="k">Updated</div><div class="v" id="m-updated">—</div></div>
+      <div class="meta-info">
+        <div class="meta-cell"><div class="k">Repositories</div><div class="v" id="m-repos">—</div></div>
+        <div class="meta-cell"><div class="k">Updated</div><div class="v" id="m-updated">—</div></div>
+      </div>
       <div class="meta-cta"><a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">PROFILE &nearr;</a></div>
     </div>
 

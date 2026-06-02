@@ -77,7 +77,11 @@ centers in the 64px slot. No emoji anywhere.
   axis** so the bold (major) lines can't drift out of alignment with the minor
   ones while scrolling. Leave this alone unless changing the grid itself.
 - **Card geometry** — widths, paddings, and min-heights are all multiples of
-  `--cell`, so cards snap to the grid automatically.
+  `--cell`. On top of that, `snapBlocks()` rounds each top-level block's height
+  (header, meta strip, every card, footer) up to a whole number of cells after
+  layout and after web fonts load, so every block's top and bottom edge lands
+  on a grid line. Blocks are marked with the `data-snap` attribute; cards get
+  it automatically when created. You don't need to manage heights by hand.
 
 ## Preview
 

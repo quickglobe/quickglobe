@@ -118,7 +118,7 @@
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
   .card{
     background:var(--cream);border:2px solid var(--ink);border-radius:5px;
-    display:grid;grid-template-columns:1fr 1fr;
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;
     overflow:hidden;position:relative;
     box-shadow:3px 3px 0 rgba(20,34,59,.14);
     text-decoration:none;color:inherit;
@@ -210,7 +210,7 @@
 </head>
 <body>
   <div id="root">
-    <header class="pf-head">
+    <header class="pf-head" data-snap>
       <div class="eyebrow">Repository Index</div>
       <div class="id-row">
         <div class="avatar">
@@ -225,7 +225,7 @@
       </div>
     </header>
 
-    <div class="meta-strip">
+    <div class="meta-strip" data-snap>
       <div><div class="k">repos</div><div class="v" id="m-repos">—</div></div>
       <div><div class="k">language</div><div class="v">HTML</div></div>
       <div><div class="k">updated</div><div class="v" id="m-updated">—</div></div>
@@ -233,7 +233,7 @@
 
     <main class="cards" id="cards"></main>
 
-    <footer class="pf-foot">
+    <footer class="pf-foot" data-snap>
       <span class="made">made for the fun of it</span>
       <a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">GITHUB &nearr;</a>
     </footer>
@@ -312,6 +312,7 @@
     a.href = r.url;
     a.target = "_blank";
     a.rel = "noopener";
+    a.setAttribute("data-snap", "");
     a.innerHTML = cardHTML(r);
     cards.appendChild(a);
   });
@@ -321,7 +322,26 @@
   const newest = REPOS.reduce((a, b) => (a.updated >= b.updated ? a : b));
   document.getElementById("m-updated").textContent = relLabel(newest.updated);
 
-  if (window.fitGrid) window.fitGrid();
+  /* Snap to grid: round each top-level block's height up to a whole number of
+     cells. The gaps between blocks (root top padding, the meta-strip margins,
+     the cards gap, the footer margin) are all already 1 cell, so once every
+     block is a whole number of cells tall, every block boundary — top and
+     bottom — lands on a grid line. */
+  function snapBlocks(){
+    var cell = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--cell"));
+    if (!cell) return;
+    document.querySelectorAll("[data-snap]").forEach(function(el){
+      el.style.minHeight = "0";                       // reset before measuring
+      var h = el.getBoundingClientRect().height;
+      el.style.minHeight = (Math.ceil(h / cell) * cell) + "px";
+    });
+  }
+
+  function relayout(){ if (window.fitGrid) window.fitGrid(); snapBlocks(); }
+  window.addEventListener("resize", relayout);
+  relayout();
+  // Re-snap once web fonts have loaded, since text wrapping changes heights.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
 </script>
 </body>
 </html>

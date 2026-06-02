@@ -82,7 +82,7 @@
   .accent{font-family:var(--accent);}
 
   /* ---------- header ---------- */
-  .pf-head{margin-bottom:calc(var(--cell));}
+  .pf-head{display:flex;flex-direction:column;margin-bottom:calc(var(--cell));}
   .eyebrow{
     font-family:var(--mono);font-size:11px;letter-spacing:.22em;
     text-transform:uppercase;color:var(--blue);
@@ -91,7 +91,7 @@
   .eyebrow::before,.eyebrow::after{content:"";height:1.5px;background:var(--blue);flex:none;}
   .eyebrow::before{width:18px;}
   .eyebrow::after{flex:1;opacity:.35;}
-  .id-row{display:flex;align-items:center;gap:15px;}
+  .id-row{display:flex;align-items:center;gap:15px;margin-bottom:16px;}
   .avatar{
     width:62px;height:62px;border-radius:7px;border:2px solid var(--ink);
     background:var(--cream);display:grid;place-items:center;flex:none;
@@ -107,7 +107,10 @@
      TODO: a repo metadata strip (count / last-updated) used to live here;
      removed for now, revisit. See CLAUDE.md. */
   .gh{
-    display:inline-flex;align-items:center;gap:4px;margin-top:18px;
+    /* margin-top:auto pushes the button to the header's snapped bottom edge, so
+       its bottom lands on a grid line and the header's 1-cell bottom margin is
+       the entire button-to-card gap. align-self keeps it at its content width. */
+    display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-top:auto;
     font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
     border:1.6px solid var(--ink);border-radius:4px;padding:9px 15px;background:var(--cream);
     text-decoration:none;color:var(--ink);box-shadow:2px 2px 0 rgba(20,34,59,.14);white-space:nowrap;

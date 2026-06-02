@@ -82,7 +82,7 @@
   .accent{font-family:var(--accent);}
 
   /* ---------- header ---------- */
-  .pf-head{margin-bottom:0;}
+  .pf-head{margin-bottom:calc(var(--cell));}
   .eyebrow{
     font-family:var(--mono);font-size:11px;letter-spacing:.22em;
     text-transform:uppercase;color:var(--blue);
@@ -103,36 +103,20 @@
   .avatar .crn.b{bottom:4px;right:4px;border-left:0;border-top:0;}
   .pf-name{margin:0;font-size:33px;font-weight:700;line-height:1;letter-spacing:-.02em;}
 
-  .meta-strip{
-    display:flex;gap:0;margin:calc(var(--cell)) 0 calc(var(--cell));border:1.6px solid var(--ink);
-    border-radius:4px;overflow:hidden;background:var(--cream);
-    font-family:var(--mono);
-  }
-  .meta-info{display:flex;flex:2;min-width:0;border-right:1.4px solid rgba(20,34,59,.18);}
-  .meta-cell{flex:1;min-width:0;padding:8px 11px;border-right:1.4px solid rgba(20,34,59,.18);}
-  .meta-info .meta-cell:last-child{border-right:none;}
-  .meta-strip .k{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#8b96ab;}
-  .meta-strip .v{font-size:14px;font-weight:700;margin-top:2px;}
-  .meta-cta{flex:1;display:flex;align-items:center;justify-content:center;padding:7px;}
-  .meta-strip .gh{
+  /* Profile button — sits on its own under the header.
+     TODO: a repo metadata strip (count / last-updated) used to live here;
+     removed for now, revisit. See CLAUDE.md. */
+  .gh{
+    display:inline-flex;align-items:center;gap:4px;margin-top:18px;
     font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
-    border:1.6px solid var(--ink);border-radius:4px;padding:7px 13px;background:var(--cream);
+    border:1.6px solid var(--ink);border-radius:4px;padding:9px 15px;background:var(--cream);
     text-decoration:none;color:var(--ink);box-shadow:2px 2px 0 rgba(20,34,59,.14);white-space:nowrap;
   }
-  .meta-strip .gh:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
+  .gh:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
   @media (hover:hover) and (pointer:fine){
-    .meta-strip .gh{transition:transform .14s ease;}
-    .meta-strip .gh:hover{transform:translate(-1px,-1px);}
+    .gh{transition:transform .14s ease;}
+    .gh:hover{transform:translate(-1px,-1px);}
   }
-  /* When the content column has shrunk below its full 18-cell width (toggled in
-     JS via .is-narrow on #root, so it tracks the actual column width rather than
-     an assumed device-pixel breakpoint), split the strip into two sections:
-     Repositories/Updated stack vertically on the left, the button alone on the
-     right. */
-  #root.is-narrow .meta-info{flex-direction:column;flex:1;}
-  #root.is-narrow .meta-cell{border-right:none;}
-  #root.is-narrow .meta-info .meta-cell:first-child{border-bottom:1.4px solid rgba(20,34,59,.18);}
-  #root.is-narrow .meta-cta{flex:0 0 auto;}
 
   /* ---------- cards ---------- */
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
@@ -207,8 +191,6 @@
         root.style.width = width + 'px';
         root.style.marginLeft = margin + 'px';
         root.style.marginRight = 'auto';
-        // Stack the meta strip once the column is below its full 18-cell width.
-        root.classList.toggle('is-narrow', width < 18 * cell - 0.5);
       }
     }
     window.fitGrid = fit;
@@ -232,15 +214,8 @@
           <h1 class="pf-name">quickglobe</h1>
         </div>
       </div>
+      <a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">PROFILE &nearr;</a>
     </header>
-
-    <div class="meta-strip" data-snap>
-      <div class="meta-info">
-        <div class="meta-cell"><div class="k">Repositories</div><div class="v" id="m-repos">—</div></div>
-        <div class="meta-cell"><div class="k">Updated</div><div class="v" id="m-updated">—</div></div>
-      </div>
-      <div class="meta-cta"><a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">PROFILE &nearr;</a></div>
-    </div>
 
     <main class="cards" id="cards"></main>
   </div>
@@ -282,11 +257,6 @@
     if (days < 365) return Math.max(1, Math.round(days / 30)) + "mo";
     return Math.max(1, Math.round(days / 365)) + "y";
   }
-  function relLabel(iso){
-    const s = relShort(iso);
-    return s === "today" ? "today" : s + " ago";
-  }
-
   function escapeHTML(s){
     return s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
   }
@@ -323,14 +293,9 @@
     cards.appendChild(a);
   });
 
-  // Meta strip: repo count and the most recently updated repo.
-  document.getElementById("m-repos").textContent = REPOS.length;
-  const newest = REPOS.reduce((a, b) => (a.updated >= b.updated ? a : b));
-  document.getElementById("m-updated").textContent = relLabel(newest.updated);
-
   /* Snap to grid: round each top-level block's height up to a whole number of
-     cells. The gaps between blocks (root top padding, the meta-strip margins,
-     the cards gap, the footer margin) are all already 1 cell, so once every
+     cells. The gaps between blocks (root top padding, the header's bottom
+     margin, the cards gap) are all already 1 cell, so once every
      block is a whole number of cells tall, every block boundary — top and
      bottom — lands on a grid line. */
   function snapBlocks(){

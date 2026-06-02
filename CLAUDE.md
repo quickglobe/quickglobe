@@ -26,6 +26,14 @@ Ink-on-paper drafting aesthetic on a two-level blueprint grid. Key rules:
   aligned. All card dimensions are multiples of `--cell`.
 - Light theme only (the design has no dark mode).
 
+## TODO
+- **Meta strip:** a repo metadata strip (repository count + last-updated) used
+  to sit below the header. It was removed for now (mobile layout needed more
+  thought) — only the Profile button was kept, on its own under the header.
+  Revisit whether to bring back a count / "last updated" indicator and how it
+  should behave on narrow screens. (`relShort()` for relative dates is still in
+  `index.html`, used by the card spec strips.)
+
 ## Updating the page
 Adding a repo card is the common task — use `/add-repo-card` or follow
 `ADDING-CARDS.md`. Always pull the `updated` ISO date from the repo's real

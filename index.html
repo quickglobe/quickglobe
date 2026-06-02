@@ -102,7 +102,6 @@
   .avatar .crn.a{top:4px;left:4px;border-right:0;border-bottom:0;}
   .avatar .crn.b{bottom:4px;right:4px;border-left:0;border-top:0;}
   .pf-name{margin:0;font-size:33px;font-weight:700;line-height:1;letter-spacing:-.02em;}
-  .pf-tag{font-family:var(--accent);font-size:calc(20px*var(--accent-size));color:var(--ink-soft);margin-top:6px;line-height:1.1;}
 
   .meta-strip{
     display:flex;gap:0;margin:calc(var(--cell)) 0 calc(var(--cell));border:1.6px solid var(--ink);
@@ -113,6 +112,17 @@
   .meta-strip div:last-child{border-right:none;}
   .meta-strip .k{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#8b96ab;}
   .meta-strip .v{font-size:14px;font-weight:700;margin-top:2px;}
+  .meta-strip .meta-cta{display:flex;align-items:center;justify-content:center;padding:7px;}
+  .meta-strip .gh{
+    font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
+    border:1.6px solid var(--ink);border-radius:4px;padding:7px 13px;background:var(--cream);
+    text-decoration:none;color:var(--ink);box-shadow:2px 2px 0 rgba(20,34,59,.14);white-space:nowrap;
+  }
+  .meta-strip .gh:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
+  @media (hover:hover) and (pointer:fine){
+    .meta-strip .gh{transition:transform .14s ease;}
+    .meta-strip .gh:hover{transform:translate(-1px,-1px);}
+  }
 
   /* ---------- cards ---------- */
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
@@ -167,18 +177,6 @@
   .spec b{color:var(--ink);font-weight:700;}
   .spec .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:5px;vertical-align:middle;}
 
-  /* ---------- footer ---------- */
-  .pf-foot{display:flex;align-items:center;justify-content:space-between;margin-top:calc(var(--cell));gap:12px;}
-  .pf-foot .made{font-family:var(--accent);font-size:calc(19px*var(--accent-size));color:var(--ink-soft);}
-  .pf-foot .gh{
-    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;
-    border:1.8px solid var(--ink);border-radius:4px;padding:9px 15px;background:var(--cream);
-    text-decoration:none;color:var(--ink);box-shadow:2px 2px 0 rgba(20,34,59,.14);
-  }
-  @media (hover:hover) and (pointer:fine){
-    .pf-foot .gh{transition:transform .14s ease;}
-    .pf-foot .gh:hover{transform:translate(-1px,-1px);}
-  }
 </style>
 <script>
   /* Blueprint grid fit: pick the integer number of columns closest to the
@@ -220,23 +218,17 @@
         </div>
         <div>
           <h1 class="pf-name">quickglobe</h1>
-          <div class="pf-tag">Every repo, filed and labelled.</div>
         </div>
       </div>
     </header>
 
     <div class="meta-strip" data-snap>
-      <div><div class="k">repos</div><div class="v" id="m-repos">—</div></div>
-      <div><div class="k">language</div><div class="v">HTML</div></div>
-      <div><div class="k">updated</div><div class="v" id="m-updated">—</div></div>
+      <div><div class="k">Repositories</div><div class="v" id="m-repos">—</div></div>
+      <div><div class="k">Updated</div><div class="v" id="m-updated">—</div></div>
+      <div class="meta-cta"><a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">PROFILE &nearr;</a></div>
     </div>
 
     <main class="cards" id="cards"></main>
-
-    <footer class="pf-foot" data-snap>
-      <span class="made">made for the fun of it</span>
-      <a class="gh" href="https://github.com/quickglobe" target="_blank" rel="noopener">GITHUB &nearr;</a>
-    </footer>
   </div>
 
 <script>

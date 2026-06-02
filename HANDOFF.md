@@ -1,5 +1,11 @@
 # Handoff: build the `quickglobe.github.io` hub landing page
 
+> **Note (historical):** This was the original brief. The page has since been
+> redesigned into the blueprint "Repository Index" portfolio — see `CLAUDE.md`
+> and `ADDING-CARDS.md` for how the current page works and how to maintain it.
+> This file is kept for the favicon/iOS-Safari rationale below, which still
+> applies.
+
 ## Goal
 Turn this repo (`quickglobe/quickglobe.github.io`, the GitHub Pages **user
 site** served at the domain root `https://quickglobe.github.io/`) into a

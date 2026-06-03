@@ -125,14 +125,9 @@
   .cards{display:flex;flex-direction:column;gap:calc(var(--cell));}
   .card{
     background:var(--cream);border:2px solid var(--ink);border-radius:5px;
-    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto auto;
     overflow:hidden;position:relative;
     box-shadow:3px 3px 0 rgba(20,34,59,.14);
-    text-decoration:none;color:inherit;
-  }
-  @media (hover:hover) and (pointer:fine){
-    .card{transition:transform .14s ease,box-shadow .14s ease;}
-    .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(47,95,208,.28);}
   }
   .card .tick{position:absolute;width:11px;height:11px;border:2px solid var(--blue);z-index:5;pointer-events:none;}
   .card .tick.tl{top:-2px;left:-2px;border-right:none;border-bottom:none;}
@@ -140,9 +135,6 @@
   .card .tick.bl{bottom:-2px;left:-2px;border-right:none;border-top:none;}
   .card .tick.br{bottom:-2px;right:-2px;border-left:none;border-top:none;}
   .idx{position:absolute;bottom:8px;right:11px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:#94a0b5;z-index:4;}
-  .arrow{position:absolute;top:8px;right:11px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);z-index:4;opacity:0;transition:opacity .14s;}
-  @media (hover:hover) and (pointer:fine){ .card:hover .arrow{opacity:1;} }
-  .card:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
 
   .prev{
     border-right:2px solid var(--ink);position:relative;
@@ -158,13 +150,26 @@
   .lineicon .acc{fill:var(--blue);stroke:var(--blue);}
   .lineicon .acc-stroke{stroke:var(--blue);}
   .body{padding:calc(0.5*var(--cell));display:flex;flex-direction:column;justify-content:flex-start;}
-  .chip{
-    align-self:flex-start;margin-top:auto;font-family:var(--mono);font-size:10px;font-weight:700;
-    letter-spacing:.13em;color:var(--blue);text-transform:uppercase;
-    border:1.4px solid var(--blue);border-radius:3px;padding:3px 8px;background:var(--blue-soft);
-  }
   .ctitle{font-size:22px;font-weight:700;line-height:1.04;letter-spacing:-.015em;margin:0;}
   .cdesc{margin:0 0 calc(0.5*var(--cell));font-family:var(--accent);font-size:calc(17px*var(--accent-size));line-height:1.3;color:var(--ink-soft);}
+
+  .links{
+    grid-column:1 / -1;border-top:1.6px dashed var(--ink);
+    display:grid;grid-template-columns:1fr 1fr;
+    background:var(--cream-2);
+  }
+  .links a{
+    display:flex;align-items:center;justify-content:center;gap:5px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink);text-decoration:none;
+    padding:9px 8px;
+  }
+  .links a:first-child{border-right:1.6px dashed var(--ink);}
+  @media (hover:hover) and (pointer:fine){
+    .links a{transition:background .12s ease,color .12s ease;}
+    .links a:hover{background:var(--blue-soft);color:var(--blue);}
+  }
+  .links a:focus-visible{outline:3px solid var(--blue);outline-offset:-3px;}
 
   .spec{
     grid-column:1 / -1;border-top:1.6px dashed var(--ink);
@@ -232,14 +237,17 @@
     { id:"blob-squish", title:"blob-squish", cat:"Game", code:"R-01",
       desc:"Repository for blob-squish.com — a squishy little browser game.",
       lang:"HTML", updated:"2026-05-26", icon:"blob",
+      deployed:"https://blob-squish.com",
       url:"https://github.com/quickglobe/blob-squish" },
     { id:"playground", title:"playground", cat:"Experiments", code:"R-02",
       desc:"Playground for random experiments and tests.",
       lang:"HTML", updated:"2026-06-02", icon:"play",
+      deployed:"https://quickglobe.github.io/playground",
       url:"https://github.com/quickglobe/playground" },
     { id:"cheat-sheets", title:"Cheat-Sheets", cat:"Reference", code:"R-03",
       desc:"Collection of quick reference sheets for things I'm learning about.",
       lang:"HTML", updated:"2026-06-01", icon:"sheets",
+      deployed:"https://quickglobe.github.io/Cheat-Sheets",
       url:"https://github.com/quickglobe/Cheat-Sheets" },
   ];
 
@@ -270,12 +278,14 @@
       <span class="tick tl"></span><span class="tick tr"></span>
       <span class="tick bl"></span><span class="tick br"></span>
       <span class="idx">${escapeHTML(r.code)}</span>
-      <span class="arrow" aria-hidden="true">&nearr;</span>
       <div class="prev"><div class="ico">${icon}</div></div>
       <div class="body">
         <h2 class="ctitle">${escapeHTML(r.title)}</h2>
         <p class="cdesc">${escapeHTML(r.desc)}</p>
-        <span class="chip">${escapeHTML(r.cat)}</span>
+      </div>
+      <div class="links">
+        <a href="${escapeHTML(r.deployed)}" target="_blank" rel="noopener">Deployed &nearr;</a>
+        <a href="${escapeHTML(r.url)}" target="_blank" rel="noopener">Repo &nearr;</a>
       </div>
       <div class="spec">
         <span><span class="dot"></span><b>${escapeHTML(r.lang)}</b></span>
@@ -286,11 +296,8 @@
 
   const cards = document.getElementById("cards");
   REPOS.forEach(r => {
-    const a = document.createElement("a");
+    const a = document.createElement("div");
     a.className = "card";
-    a.href = r.url;
-    a.target = "_blank";
-    a.rel = "noopener";
     a.setAttribute("data-snap", "");
     a.innerHTML = cardHTML(r);
     cards.appendChild(a);

@@ -153,23 +153,19 @@
   .ctitle{font-size:22px;font-weight:700;line-height:1.04;letter-spacing:-.015em;margin:0;}
   .cdesc{margin:0 0 calc(0.5*var(--cell));font-family:var(--accent);font-size:calc(17px*var(--accent-size));line-height:1.3;color:var(--ink-soft);}
 
-  .links{
-    grid-column:1 / -1;border-top:1.6px solid var(--ink);
-    display:grid;grid-template-columns:1fr 1fr;
-    background:var(--cream);
-  }
-  .links a{
+  .link-deploy,.link-repo{
+    border-top:1.6px solid var(--ink);
     display:flex;align-items:center;justify-content:center;gap:5px;
     font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
     text-transform:uppercase;color:var(--ink);text-decoration:none;
-    padding:9px 8px;
+    padding:9px 8px;background:var(--cream);
   }
-  .links a:first-child{border-right:2px dotted var(--ink);}
+  .link-deploy{border-right:2px dotted var(--ink);}
   @media (hover:hover) and (pointer:fine){
-    .links a{transition:background .12s ease,color .12s ease;}
-    .links a:hover{background:var(--blue-soft);color:var(--blue);}
+    .link-deploy,.link-repo{transition:background .12s ease,color .12s ease;}
+    .link-deploy:hover,.link-repo:hover{background:var(--blue-soft);color:var(--blue);}
   }
-  .links a:focus-visible{outline:3px solid var(--blue);outline-offset:-3px;}
+  .link-deploy:focus-visible,.link-repo:focus-visible{outline:3px solid var(--blue);outline-offset:-3px;}
 
   .spec{
     grid-column:1 / -1;border-top:1.6px solid var(--ink);
@@ -283,10 +279,8 @@
         <h2 class="ctitle">${escapeHTML(r.title)}</h2>
         <p class="cdesc">${escapeHTML(r.desc)}</p>
       </div>
-      <div class="links">
-        <a href="${escapeHTML(r.deployed)}" target="_blank" rel="noopener">Deployed &nearr;</a>
-        <a href="${escapeHTML(r.url)}" target="_blank" rel="noopener">Repo &nearr;</a>
-      </div>
+      <a class="link-deploy" href="${escapeHTML(r.deployed)}" target="_blank" rel="noopener">Deployed &nearr;</a>
+      <a class="link-repo" href="${escapeHTML(r.url)}" target="_blank" rel="noopener">Repo &nearr;</a>
       <div class="spec">
         <span><span class="dot"></span><b>${escapeHTML(r.lang)}</b></span>
         <span>upd ${relShort(r.updated)}</span>

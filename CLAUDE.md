@@ -13,7 +13,13 @@ HTML/CSS/JS. It is also the GitHub profile repo.
   that fetches the real last-push date via GitHub and edits `REPOS` for you.
 - `favicon.*`, `apple-touch-icon.png`, `android-chrome-*.png`,
   `site.webmanifest`, `browserconfig.xml`, `quickglobe-avatar.svg` — the icon
-  set (also fixes the iOS Safari Favourites grid; see `HANDOFF.md`).
+  set (also fixes the iOS Safari Favourites grid; see `HANDOFF.md`). The mark
+  is a **circular** blueprint globe with transparent corners.
+- `tools/generate-icons.py` — regenerates the whole icon set from one source
+  of truth (`python3 tools/generate-icons.py`, needs `cairosvg`+`pillow`).
+  Edit the globe there, not the individual PNGs. `apple-touch-icon.png` is
+  rendered on a solid paper square (no alpha) because iOS masks it into a
+  rounded square — a literal circle isn't possible for the Favourites tile.
 - `HANDOFF.md` — historical context for why this repo + icon set exist.
 
 ## Design (current: blueprint "Repository Index")

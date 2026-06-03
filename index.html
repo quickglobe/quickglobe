@@ -160,10 +160,11 @@
     text-transform:uppercase;color:var(--ink);text-decoration:none;
     padding:9px 8px;background-color:var(--cream);
   }
-  .link-deploy{
-    background-image:repeating-linear-gradient(to bottom,
-      transparent 0,transparent 4px,var(--ink) 4px,var(--ink) 7px);
-    background-size:2px 7px;background-position:right 0;background-repeat:repeat-y;
+  .link-deploy{position:relative;}
+  .link-deploy::after{
+    content:'';position:absolute;right:0;top:5px;bottom:5px;width:2px;
+    background:repeating-linear-gradient(to bottom,
+      var(--ink) 0,var(--ink) 3px,transparent 3px,transparent 6px);
   }
   @media (hover:hover) and (pointer:fine){
     .link-deploy,.link-repo{transition:background .12s ease,color .12s ease;}

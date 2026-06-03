@@ -197,10 +197,11 @@ ORIG_BODY = (
     '<path d="M 92.1316397079674 192.54061592128767 A 168 168 0 0 1 307.4593840787122 92.13163970796737" fill="none" stroke="rgba(31, 111, 235, 0.95)" stroke-width="6.5" stroke-linecap="round" opacity="0.4"/>'
 )
 
-# Disc that encloses the globe + swooshes with a small cream border. The
-# content is slightly off-centre (swooshes extend left), so the disc centre is
-# nudged left of the globe centre to balance the margin.
-DISC_CX, DISC_CY, DISC_R = 228, 250, 207
+# Crop disc — concentric with the globe (centred at 250,250), matching the
+# page-body avatar (quickglobe-avatar.svg cropped via border-radius:50%). The
+# cream border is therefore even all the way round; swooshes sit inside it
+# (their tips reach ~214 from centre, within the 250 radius).
+DISC_CX, DISC_CY, DISC_R = 250, 250, 250
 
 
 def swoosh_disc_svg():

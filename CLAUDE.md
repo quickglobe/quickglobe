@@ -17,7 +17,11 @@ HTML/CSS/JS. It is also the GitHub profile repo.
   is a **circular** blueprint globe with transparent corners.
 - `tools/generate-icons.py` — regenerates the whole icon set from one source
   of truth (`python3 tools/generate-icons.py`, needs `cairosvg`+`pillow`).
-  Edit the globe there, not the individual PNGs. `apple-touch-icon.png` is
+  Edit the globe there, not the individual PNGs. Large icons (`favicon.svg`,
+  `android-chrome-*`, `apple-touch-icon`) carry the full globe **plus the
+  left-trailing motion swooshes**, inside a cream disc with a small border;
+  small favicons (`favicon.ico`, `favicon-16/32/48`) use a clean bold globe
+  with no swooshes (they'd muddy at that size). `apple-touch-icon.png` is
   rendered on a solid paper square (no alpha) because iOS masks it into a
   rounded square — a literal circle isn't possible for the Favourites tile.
 - `HANDOFF.md` — historical context for why this repo + icon set exist.

@@ -124,7 +124,7 @@
        the entire button-to-card gap. align-self keeps it at its content width. */
     display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-top:auto;
     font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
-    border:1.6px solid var(--ink);border-radius:4px;padding:9px 15px;background:var(--cream);
+    border:2px solid var(--ink);border-radius:4px;padding:9px 15px;background:var(--cream);
     text-decoration:none;color:var(--ink);box-shadow:2px 2px 0 rgba(20,34,59,.14);white-space:nowrap;
   }
   .gh:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
@@ -152,7 +152,7 @@
   .idx{position:absolute;bottom:8px;right:11px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:#94a0b5;z-index:4;}
 
   .prev{
-    border-right:2px solid var(--ink);position:relative;
+    border-right:1.6px solid var(--ink);position:relative;
     min-height:calc(6*var(--cell));overflow:hidden;
     display:grid;place-items:center;
     background-color:#eef2f8;
@@ -181,7 +181,7 @@
     text-transform:uppercase;color:var(--ink);text-decoration:none;
     padding:9px 8px;background-color:var(--cream);
   }
-  .link-deploy{border-right:2px dashed var(--ink);}
+  .link-deploy{border-right:1.6px solid var(--ink);}
   @media (hover:hover) and (pointer:fine){
     .link-deploy,.link-repo{transition:background .12s ease,color .12s ease;}
     .link-deploy:hover,.link-repo:hover{background:var(--blue-soft);color:var(--blue);}

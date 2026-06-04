@@ -45,6 +45,14 @@ Ink-on-paper drafting aesthetic on a two-level blueprint grid. Key rules:
   `index.html`, used by the card spec strips.)
 
 ## Updating the page
-Adding a repo card is the common task — use `/add-repo-card` or follow
-`ADDING-CARDS.md`. Always pull the `updated` ISO date from the repo's real
-`pushed_at` via the GitHub MCP tools; never hard-code relative times.
+1. Adding a repo card is the common task — use `/add-repo-card` or follow
+   `ADDING-CARDS.md`. Always pull the `updated` ISO date from the repo's real
+   `pushed_at` via the GitHub MCP tools; never hard-code relative times.
+2. **Give a clickable preview link as the final step.** Provide the
+   `raw.githack.com` URL for the changed file, on its own line, with no markdown
+   link text, parentheses, or trailing punctuation, so the phone/terminal client
+   auto-links it. Never hand over the PR (`github.com/.../pull/N`) URL as the
+   preview — that is the diff view, not the rendered page.
+   - Format: `https://raw.githack.com/quickglobe/playground/<branch>/<project>/index.html`
+   - If a preview looks stale, append a cache-busting query (`?v=2`) and bump the
+     number each time.
